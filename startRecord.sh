@@ -11,9 +11,7 @@ DATE=`date +"%Y-%d-%m_%H:%M:%S"`
 
 if [ $CHECK -eq 0 ]
 then
-#echo "/opt/ffmpeg/ffmpeg -i udp://224.0.0.1:$i?timeout=500 -c copy -f mpegts /v01/Re_${i}_$DATE.ts"
 nohup /opt/ffmpeg/ffmpeg -i udp://224.0.0.1:${i}?timeout=500 -c copy -f mpegts /v01/Re_${i}_$DATE.ts >/dev/null &
-#echo "Restart Re_$i">>/tmp/record.log
 fi
 done
 done

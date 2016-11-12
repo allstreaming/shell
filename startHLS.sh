@@ -1,7 +1,7 @@
 #!/bin/bash
 
-SOURCE="huamao?fmt=x264_700k_flv&cpid=creditease"
-CP="creditease"
+SOURCE="huamao?fmt=x264_700k_flv&cpid=creditease" #Add your guid.
+CP="creditease" #Path of your live on your websever.
 
 check_ffmpeg(){
 

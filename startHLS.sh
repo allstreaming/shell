@@ -1,17 +1,26 @@
 #!/bin/bash
 
-SOURCE="online_conference?fmt=x264_700k_mpegts&cpid=creditease"
-PATH="creditease"
-CHECK=`ps -ef|grep -c hls_time`
+SOURCE="huamao?fmt=x264_700k_flv&cpid=creditease"
+CP="creditease"
+
+check_ffmpeg(){
+
+CHECK=`ps -ef|grep -v "grep"|grep -c hls_time`
+DATE=`date +"%Y/%m/%d %H:%M:%S"`
+
+if [ $CHECK -eq 0 ]
+then
+echo "$DATE Restart FFMPEG" >>/tmp/check.log
+nohup /opt/znfz/ffmpeg -i "http://127.0.0.1/live/${SOURCE}" -c copy -bsf:v h264_mp4toannexb -f hls -hls_time 10 -hls_list_size 10 -hls_wrap 10 -hls_segment_filename "/SO/gui/live/${CP}/file%02d.ts" /SO/gui/live/${CP}/index.m3u8 > /dev/null &
+sleep 10
+else
+sleep 10
+fi
+}
 
 while true
 do
-if [ $ -eq 0 ]
-then
-/usr/bin/nohup /opt/znfz/ffmpeg -i "http://127.0.0.1/live/${SOURCE}" -c copy -f hls -hls_time 10 -hls_list_size 10 -hls_wrap 10 -hls_segment_filename /SO/gui/live/${PATH}/file%02d.ts /SO/gui/live/${PATH}/index.m3u8 > /dev/null &
-else
-sleep 5
-fi
+check_ffmpeg
 done
 
-exit 0
+exit  0
